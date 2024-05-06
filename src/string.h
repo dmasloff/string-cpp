@@ -1,5 +1,5 @@
-#ifndef // STRING_H
-#define // STRING_H
+#ifndef STRING_H
+#define STRING_H
 
 #include <algorithm>
 #include <cstring>
