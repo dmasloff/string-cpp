@@ -1,0 +1,26 @@
+name: string-cpp-testing
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v4
+
+      # Runs a single command using the runners shell
+      - name: build
+        run: |
+          clang++ -std=c++20 -gdwarf-4 -O0 -Wall -Wextra -Werror -o ./test_simple src/*
+          clang++ -std=c++20 -O2 -Wall -Wextra -Werror -o ./test_simple_opt src/*
+          clang++ -std=c++20 -g -O0 -Wall -Wextra -Werror -fsanitize=undefined -o ./test_ubsan string_test.cpp string.cpp
+
+      - name: simple test
+        run: ./test_simple
+      - name: simple optimized test
+        run: ./test_simple_opt
+      - name: ubsan test
+        run: ./test_ubsan
