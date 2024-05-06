@@ -17,9 +17,9 @@ jobs:
       # Runs a single command using the runners shell
       - name: build
         run: |
-          clang++ -std=c++20 -gdwarf-4 -O0 -Wall -Wextra -Werror -o ./test_simple src/*
-          clang++ -std=c++20 -O2 -Wall -Wextra -Werror -o ./test_simple_opt src/*
-          clang++ -std=c++20 -g -O0 -Wall -Wextra -Werror -fsanitize=undefined -o ./test_ubsan string_test.cpp string.cpp
+          clang++ -std=c++20 -gdwarf-4 -O0 -Wall -Wextra -Werror -o ./test_simple src/string.h src/string.cpp
+          clang++ -std=c++20 -O2 -Wall -Wextra -Werror -o ./test_simple_opt src/string.h src/string.cpp
+          clang++ -std=c++20 -g -O0 -Wall -Wextra -Werror -fsanitize=undefined -o src/string.h src/string.cpp
 
       - name: simple test
         run: ./test_simple
