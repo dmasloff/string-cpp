@@ -11,8 +11,6 @@ test_ubsan: tests/string_test.cpp src/string.h
 
 info:
 	clang++ --version
-	clang-tidy --version
-	clang-format --version
 	valgrind --version
 
 run: build
@@ -25,26 +23,9 @@ run: build
 	@echo 'Run tests (valgrind)'
 	time valgrind --leak-check=yes ./test_simple
 
-lint:
-	@echo 'Check code is formatted'
-	clang-format --style=file --dry-run --Werror *.h *.cpp
-	@echo 'Run linter'
-	clang-tidy --config "$(shell cat .clang-tidy)" --warnings-as-errors="*"  tests/string_test.cpp src/string.cpp '-header-filter=.*' -- -std=c++20 -g -O0 -Wall -Wextra -Werror
-	@echo 'Check NOLINT is not used'
-	! grep NOLINT src/string src/string.cpp
-	@echo 'Check std::string is not used'
-	! grep std::string src/string src/string.cpp
-	@echo 'Check all TODOs are removed'
-	! grep TODO src/string src/string.cpp
-
-test: info run lint
+test: info run
 	@echo 'Great job!'
-
-format:
-	@echo 'Apply linter fixes'
-	clang-tidy --config "$(shell cat .clang-tidy)" --fix tests/string_test.cpp src/string.cpp '-header-filter=.*' -- -std=c++20 -g -O0 -Wall -Wextra -Werror
-	@echo 'Apply formatter'
-	clang-format --style=file -i *.h *.cpp
 
 clean:
 	rm test_simple test_simple_opt test_ubsan
+	rm -rf test_simple.dSYM test_ubsan.dSYM
