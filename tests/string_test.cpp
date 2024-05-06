@@ -5,7 +5,7 @@
 #include <iostream>
 #include <sstream>
 #include <string>
-#include <tuple>  // for std::ignore
+#include <tuple>
 #include <type_traits>
 
 void test1() {
